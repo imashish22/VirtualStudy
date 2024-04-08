@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:studyat/models/usermodel.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:studyat/pages/constants.dart';
 import 'package:studyat/pages/pdfviewscreen.dart';
 
 class PdfFiles extends StatefulWidget {
@@ -86,6 +87,7 @@ class _PdfFilesState extends State<PdfFiles> {
     return Scaffold(
       appBar: AppBar(
         title: Text('PDF Files'),
+        backgroundColor: kpink,
       ),
       body: ListView.builder(
         itemCount: _pdfFiles.length,
@@ -104,11 +106,12 @@ class _PdfFilesState extends State<PdfFiles> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    border: Border.all(),
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            Color.fromARGB(255, 233, 89, 249).withOpacity(0.5),
+                        color: Colors.transparent,
+                        // Color.fromARGB(255, 233, 89, 249).withOpacity(0.5),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: Offset(0, 3),
