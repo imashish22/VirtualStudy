@@ -5,10 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:studyat/models/firebasehelper.dart';
 import 'package:studyat/models/usermodel.dart';
-import 'package:studyat/pages/completeprofile.dart';
 import 'package:studyat/pages/homepage.dart';
-import 'package:studyat/pages/loginpage.dart';
-import 'package:studyat/pages/signuppage.dart';
 import 'package:studyat/pages/welcome.dart';
 import 'package:uuid/uuid.dart';
 

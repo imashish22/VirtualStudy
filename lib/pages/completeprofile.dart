@@ -168,7 +168,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                         (imageFile != null) ? FileImage(imageFile!) : null,
                     child: (imageFile == null)
                         ? Icon(
-                            Icons.person,
+                            Icons.add_a_photo_outlined,
                             size: 60,
                           )
                         : null,
@@ -182,11 +182,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
                 SizedBox(height: 20),
                 CupertinoButton(
                   onPressed: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return HomePage();
-                    // }
-                    // ));
                     checkValue();
                   },
                   color: kpink,

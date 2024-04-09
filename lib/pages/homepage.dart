@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+// ignore: unused_import
 import 'package:firebase_storage/firebase_storage.dart';
 
+// ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:studyat/models/usermodel.dart';
 import 'package:studyat/pages/constants.dart';
+import 'package:studyat/pages/joinconference.dart';
 import 'package:studyat/pages/loginpage.dart';
 import 'package:studyat/pages/pdffiles.dart';
-import 'package:studyat/pages/pdfviewscreen.dart';
 import 'package:studyat/pages/uploadfiles.dart';
 import 'package:studyat/pages/userchats.dart';
 
@@ -46,14 +48,15 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: [
           Container(
-            height: 255,
+            height: 300,
             padding: EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 10),
             decoration: BoxDecoration(
-                color: kpink,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40),
-                  bottomRight: Radius.circular(40),
-                )),
+              color: kpink,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
+              ),
+            ),
             child: Column(
               children: [
                 Row(
@@ -86,9 +89,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
+                              SizedBox(height: 10.0),
                               Text(
                                 "Today is a good day\nto learn something new!",
                                 style: TextStyle(
@@ -114,7 +115,8 @@ class _HomePageState extends State<HomePage> {
                                 child: CircleAvatar(
                                   radius: 140,
                                   backgroundImage: NetworkImage(
-                                      widget.userModel.profilepic!),
+                                    widget.userModel.profilepic!,
+                                  ),
                                 ),
                               ),
                             ],
@@ -123,15 +125,18 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
-          SizedBox(height: 20),
+
+          Image.asset(
+            "assets/images/ux.png",
+            fit: BoxFit.cover,
+          ) 
         ],
       ),
 
-      // Your content goes here...
 
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: 65), // Move the FAB 30 pixels above
@@ -156,7 +161,13 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             _selectedIndex = index;
           });
-          if (index == 2) {
+          if (index == 1) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return JoinConference(
+                  userModel: widget.userModel,
+                  firebaseUser: widget.firebaseUser);
+            }));
+          } else if (index == 2) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) {
@@ -182,7 +193,7 @@ class _HomePageState extends State<HomePage> {
             inactiveColor: Colors.grey[300],
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.favorite_rounded),
+            icon: Icon(Icons.video_call_outlined),
             title: Text('Conference'),
             inactiveColor: Colors.grey[300],
             activeColor: kpink,

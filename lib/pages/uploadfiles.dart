@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:studyat/models/usermodel.dart';
 import 'package:studyat/pages/constants.dart';
-import 'package:studyat/pages/pdffiles.dart'; // Import the PdfFiles screen
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UploadFiles extends StatefulWidget {
   final UserModel userModel;
@@ -52,18 +52,27 @@ class _UploadFilesState extends State<UploadFiles> {
       final Reference storageRef = FirebaseStorage.instance
           .ref()
           .child('pdfs')
-          .child(
-              'shared') // Store in a shared directory accessible to all users
+          .child('shared')
           .child('pdf_${DateTime.now().millisecondsSinceEpoch}.pdf');
       final UploadTask uploadTask = storageRef.putFile(File(filePath));
-      await uploadTask.whenComplete(() {});
+      final TaskSnapshot snapshot = await uploadTask;
+      final String downloadUrl = await snapshot.ref.getDownloadURL();
+
+      // Save metadata to Firestore
+      await FirebaseFirestore.instance.collection('notes').add({
+        'userId': widget.firebaseUser.uid, // Store the UID of the uploader
+        'userName': widget.userModel.fullname, // Store the name of the uploader
+        'pdfUrl': downloadUrl, // Store the download URL of the PDF
+      });
 
       setState(() {
         _uploading = false;
       });
 
-      // Navigate back to PdfFiles screen after successful upload
-      Navigator.pop(context); // This will go back to the previous screen
+      // Show a snackbar indicating successful upload
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('PDF uploaded successfully'),
+      ));
     } catch (e) {
       setState(() {
         _uploading = false;

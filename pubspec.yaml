@@ -34,20 +34,24 @@ dependencies:
   firebase_auth: ^4.18.0
   cloud_firestore: ^4.15.10
   firebase_storage: ^11.7.0
-  file_picker: ^8.0.0+1
+  file_picker: ^6.0.0
+  http: ^0.13.4
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   image_picker: ^1.0.7
-  image_cropper: ^5.0.1
+  image_cropper: 4.0.1
   uuid: ^4.3.3
   pdf: ^3.10.8
   path_provider: ^2.1.2
   advance_pdf_viewer: ^2.0.1
   easy_pdf_viewer: ^1.0.8
   bottom_navy_bar: ^6.0.0
+  zego_uikit_prebuilt_video_conference: ^2.7.2
+
+ 
 
 dev_dependencies:
   flutter_test:

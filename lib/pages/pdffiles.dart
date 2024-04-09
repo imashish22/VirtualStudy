@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:studyat/models/usermodel.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:studyat/pages/constants.dart';
 import 'package:studyat/pages/pdfviewscreen.dart';
 
@@ -41,7 +40,13 @@ class _PdfFilesState extends State<PdfFiles> {
         result.items.map((item) async {
           final fileName = item.name.split('/').last;
           final downloadURL = await item.getDownloadURL();
-          return {'name': fileName, 'url': downloadURL};
+          final metadata = await item.getMetadata();
+          final uploadedBy = metadata.customMetadata!['uploadedBy'];
+          return {
+            'name': fileName,
+            'url': downloadURL,
+            'uploadedBy': uploadedBy
+          };
         }).toList(),
       );
 
@@ -51,9 +56,8 @@ class _PdfFilesState extends State<PdfFiles> {
     }
   }
 
-  Future<void> _showPdfDialog(String pdfUrl) async {
+  void _showPdfDialog(String pdfUrl) {
     try {
-      // Navigate to PdfViewScreen passing the pdfUrl
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -89,62 +93,58 @@ class _PdfFilesState extends State<PdfFiles> {
         title: Text('PDF Files'),
         backgroundColor: kpink,
       ),
-      body: ListView.builder(
-        itemCount: _pdfFiles.length,
-        itemBuilder: (context, index) {
-          final pdfName = _pdfFiles[index]['name'];
-          final pdfUrl = _pdfFiles[index]['url'];
-          final userName = widget.userModel.fullname ?? 'Unknown User';
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () {
-                _showPdfDialog(pdfUrl!);
+      body: _pdfFiles.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: _pdfFiles.length,
+              itemBuilder: (context, index) {
+                final pdfName = _pdfFiles[index]['name'];
+                final pdfUrl = _pdfFiles[index]['url'];
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      _showPdfDialog(pdfUrl!);
+                    },
+                    child: SizedBox(
+                      height: 200,
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: kblue, // Set background color to purple
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.transparent,
+                              spreadRadius: 3,
+                              blurRadius: 7,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.network(
+                              'https://pacific7.co.nz/wp-content/uploads/2018/08/PDF-download-image-768x768.png',
+                              height: 100,
+                            ),
+                            Text(
+                              pdfName!,
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               },
-              child: SizedBox(
-                height: 200,
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.transparent,
-                        // Color.fromARGB(255, 233, 89, 249).withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 7,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.network(
-                        'https://pacific7.co.nz/wp-content/uploads/2018/08/PDF-download-image-768x768.png',
-                        height: 130,
-                      ),
-                      Text(
-                        pdfName!,
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      Text(
-                        userName,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
-          );
-        },
-      ),
     );
   }
 }
