@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:studyat/models/firebasehelper.dart';
 import 'package:studyat/models/usermodel.dart';
 import 'package:studyat/pages/homepage.dart';
+import 'package:studyat/pages/secret.dart';
 import 'package:studyat/pages/welcome.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,11 +17,11 @@ void main() async {
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
-              apiKey: "AIzaSyA7SZ67M5vqFe2HiGFpKKPXjoDD6SvNi3o",
-              appId: "1:458550375093:android:9216c313b422c987c884fc",
-              messagingSenderId: "458550375093",
-              projectId: "studyat-91370",
-              storageBucket: "studyat-91370.appspot.com"))
+              apiKey: Secret.apiKey,
+              appId: Secret.firebaseappId,
+              messagingSenderId: Secret.messagingSenderId,
+              projectId: Secret.projectId,
+              storageBucket: Secret.storageBucket))
       : await Firebase.initializeApp();
 
   User? currentUser = FirebaseAuth.instance.currentUser;
