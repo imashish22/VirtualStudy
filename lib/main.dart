@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ void main() async {
 
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
-    // Logged In
     UserModel? thisUserModel =
         await FirebaseHelper.getUserModelById(currentUser.uid);
     if (thisUserModel != null) {
@@ -36,15 +34,12 @@ void main() async {
       runApp(MyApp());
     }
   } else {
-    // Not logged in
     runApp(MyApp());
   }
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -60,7 +55,6 @@ class MyAppLoggedIn extends StatelessWidget {
 
   const MyAppLoggedIn(
       {super.key, required this.userModel, required this.firebaseUser});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

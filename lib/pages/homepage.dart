@@ -129,15 +129,12 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-
           Image.asset(
             "assets/images/ux.png",
             fit: BoxFit.cover,
-          ) 
+          )
         ],
       ),
-
-
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: 65), // Move the FAB 30 pixels above
         child: FloatingActionButton(
