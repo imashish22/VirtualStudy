@@ -37,20 +37,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
       cropImage(pickedFile);
     }
   }
-
-  // void cropImage(XFile file) async {
-  //   File? croppedImage = (await ImageCropper().cropImage(
-  //     sourcePath: file.path,
-  //     aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-  //     compressQuality: 40,
-  //   )) as File?;
-
-  //   if (croppedImage != null) {
-  //     setState(() {
-  //       imageFile = croppedImage;
-  //     });
-  //   }
-  // }
+  
   void cropImage(XFile file) async {
     CroppedFile? croppedImage = await ImageCropper().cropImage(
       sourcePath: file.path,
@@ -161,9 +148,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   padding: EdgeInsets.all(0),
                   child: CircleAvatar(
                     radius: 60,
-
-                    // backgroundImage:
-                    //     imageFile != null ? FileImage(imageFile!) : null,
                     backgroundImage:
                         (imageFile != null) ? FileImage(imageFile!) : null,
                     child: (imageFile == null)

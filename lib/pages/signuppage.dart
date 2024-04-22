@@ -129,12 +129,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(height: 20),
                 CupertinoButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) {
-                    //     return CompleteProfile();
-                    //   }),
-                    // );
                     checkValues();
                   },
                   color: kpink,
